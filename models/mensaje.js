@@ -1,15 +1,15 @@
 const MensajeSchema = Schema({
-  de: {
+  from: {
     type: Schema.Types.ObjectId,
     ref: 'Usuario', 
     required: true,
   },
-  para: {
+  to: {
     type: Schema.Types.ObjectId,
     ref: 'Usuario', 
     required: true,
   },
-  mensaje: {
+  message: {
     type: String,
     required: true,
   },  

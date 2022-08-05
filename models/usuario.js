@@ -1,18 +1,18 @@
 const { Schema, model } = require('moongose');
 
 const UsuarioSchema = Schema({
-  nombre: {
+  name: {
     type: String,
     required: true
   },
   email: {
     type: String,
-    required: false,
+    required: true,
     unique: true
   },
   password: {
     type: String,
-    required: false,
+    required: true,
   },
   online: {
     type: Boolean,
