@@ -1,3 +1,5 @@
+const { Schema, model } = require('mongoose');
+
 const MensajeSchema = Schema({
   from: {
     type: Schema.Types.ObjectId,
@@ -23,4 +25,4 @@ MensajeSchema.method('toJSON', function () {
   return object;
 });
 
-module.exports = mode('Mensaje', MensajeSchema);
+module.exports = model('Mensaje', MensajeSchema);
