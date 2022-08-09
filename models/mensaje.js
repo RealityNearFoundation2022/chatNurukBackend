@@ -1,3 +1,5 @@
+const { Schema, model } = require('mongoose');
+
 const MensajeSchema = Schema({
   from: {
     type: Schema.Types.ObjectId,
