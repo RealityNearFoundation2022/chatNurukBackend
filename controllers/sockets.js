@@ -19,7 +19,7 @@ const userDisconnect = async( uid ) => {
 }
 
 // get all users in MongoDB in online status
-const getUsuarios = async() => {
+const getUsers = async() => {
     const usuarios = await Usuario
         .find()
         .sort('-online');
@@ -42,6 +42,6 @@ const saveMessage = async( payload ) => {
 module.exports = {
     userConnected,
     userDisconnect,
-    getUsuarios, 
+    getUsers, 
     saveMessage,
 }

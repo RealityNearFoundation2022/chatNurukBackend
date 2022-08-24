@@ -4,17 +4,16 @@ const bcrypt       = require('bcryptjs');
 const Usuario      = require('../models/usuario');
 const { generateJWT } = require('../helpers/jwt')
 
-
-const crearUsuario = async (req, res = response) => {
+const createUser = async (req, res = response) => {
   try {
-    const { email, password } = req.body;
-
+    // fecht del endpoint de user/me traer los componentes que necesito
+    const { email } = req.body;
     // verification if email already exist
     const userExist = await Usuario.findOne({ email});
     if (userExist){
-      return res.status(400).json({ 
+      return res.status(200).json({ 
         ok: false,
-        msg: 'Email already exists',
+        msg: 'Email already exists in DB',
       })
     }
     //  Save user in DB
@@ -50,7 +49,6 @@ const login = async (req, res = response) => {
         msg: 'Email o password not found'
       });
     }
-
     // Validation password
     const validPassword = bcrypt.compareSync( password, userDB.password);
     if ( !validPassword ) {
@@ -93,8 +91,23 @@ const renewToken =  async (req, res = response) => {
   });
 }
 
+const tokenAuth =  async (req, res = response) => {
+  const uid = req.uid;
+  // Generate new JWT token
+  const token = await generateJWT( uid );
+  // Get user for UID
+  const user = await Usuario.findById( uid);
+
+  res.json({
+    ok: true,
+    user,
+    token
+  });
+}
+
 module.exports = {
-  crearUsuario,
+  createUser,
   login,
-  renewToken
+  renewToken,
+  tokenAuth,
 }
