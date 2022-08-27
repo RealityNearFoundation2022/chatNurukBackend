@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  chatnuruk: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: backend
+    restart: always
+
+    env_file: .env
+    ports:
+      - "3005:3001"

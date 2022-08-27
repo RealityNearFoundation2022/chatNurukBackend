@@ -1,13 +1,11 @@
 const { verifyJWT } = require('../helpers/jwt');
-const { userConnected, saveMessage, userDisconnect, getUsuarios } = require('../controllers/sockets')
+const { userConnected, saveMessage, userDisconnect, getUsers } = require('../controllers/sockets')
 
 class Sockets {
     constructor( io ) {
         this.io = io;
-
         this.socketEvents();
     }
-
     socketEvents() {
         // On connection
         this.io.on('connection', async( socket ) => {
@@ -24,7 +22,7 @@ class Sockets {
             console.log('user connected', user.name)
 
             // TODO: Emitir todos los usuarios conectados
-            this.io.emit('lista-usuarios', await getUsuarios() );
+            this.io.emit('lista-usuarios', await getUsers() );
 
             // TODO: Escuchar cuando el cliente manda un mensaje // y un mensaje personal a un grupo...
             socket.on( 'mensaje-personal', async(payload) => {
@@ -41,9 +39,8 @@ class Sockets {
             // TODO: Emitir todos los usuarios conectados
             socket.on('disconnect', async() =>{
                 await userDisconnect(uid);
-                this.io.emit('lista-usuarios', await getUsuarios());
+                this.io.emit('lista-usuarios', await getUsers());
             })
-
         
         });
     }

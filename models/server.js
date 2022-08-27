@@ -4,9 +4,11 @@ const http     = require('http');
 const socketio = require('socket.io');
 const path     = require('path');
 const cors     = require('cors');
-
 const Sockets  = require('./sockets');
+
+
 const { dbConnection } = require('../database/config');
+const { dbPgConnection } = require('../database/dbPostgres');
 
 class Server {
 
@@ -17,7 +19,9 @@ class Server {
 
         // Conectar a DB connection
         dbConnection();
+        dbPgConnection();
 
+        
         // Http server
         this.server = http.createServer( this.app );
         
