@@ -14,21 +14,15 @@ const dbPgConnection = async () => {
       //   rejectUnauthorized : false,
       // }
     });
-    const res = await pool.connect();
-    // const res = await pool.query('SELECT * FROM users');
-    console.log('DB Postgres connected succesfully!', res );
-
+    await pool.connect();
+    // const res = await pool.query('SELECT * FROM public.user WHERE id = $1', [2]);
+    console.log('DB Postgres connected succesfully!' );
+    // console.log('user:', res.rows[0])
   } catch(error){
     console.log(error);
     // throw new Error('Couldn\'t connect to Postgres');
   }
 }
-
-
-// const db = async (texto, params) => {
-//   // await pool.query("SET search_path TO 'chatSchema';");
-//   return pool.query(texto, params) 
-// }
 
 module.exports = {
   dbPgConnection

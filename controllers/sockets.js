@@ -1,37 +1,33 @@
-const Usuario = require('../models/usuario');
-const Mensaje = require('../models/mensaje');
-
+const User = require('../models/user');
+const Message = require('../models/messaje');
 
 const userConnected = async( uid ) => {
-    const user = await Usuario.findById(uid);
+    const user = await User.findById(uid);
     user.online = true;
     await user.save();
-    
     return user;
 }
 
 const userDisconnect = async( uid ) => {
-    const user = await Usuario.findById(uid);
+    const user = await User.findById(uid);
     user.online = false;
     await user.save();
-    
     return user;
 }
 
 // get all users in MongoDB in online status
-const getUsuarios = async() => {
-    const usuarios = await Usuario
+const getUsers = async() => {
+    const users = await User
         .find()
         .sort('-online');
-    return usuarios;
+    return users;
 }
 
 const saveMessage = async( payload ) => {
     try {
-        const message = new Mensaje( payload );
+        const message = new Message( payload );
         await message.save();
         return message;
-
     } catch (error) {
         console.log(error);
         return false;
@@ -42,6 +38,6 @@ const saveMessage = async( payload ) => {
 module.exports = {
     userConnected,
     userDisconnect,
-    getUsuarios, 
+    getUsers, 
     saveMessage,
 }

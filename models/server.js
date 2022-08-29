@@ -18,7 +18,9 @@ class Server {
         this.port = process.env.PORT;
 
         // Conectar a DB connection
+        // MongoDB connection
         dbConnection();
+        // Postgress connection
         dbPgConnection();
 
         
@@ -66,6 +68,5 @@ class Server {
     }
 
 }
-
 
 module.exports = Server;

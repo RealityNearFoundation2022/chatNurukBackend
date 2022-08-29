@@ -27,7 +27,7 @@ class Sockets {
             // TODO: Escuchar cuando el cliente manda un mensaje // y un mensaje personal a un grupo...
             socket.on( 'mensaje-personal', async(payload) => {
                 const message = await saveMessage( payload);
-                console.log(message)
+                console.log(payload)
                 this.io.to( payload.to ).emit( 'mensaje-personal', message );
                 this.io.to( payload.from ).emit( 'mensaje-personal', message );
             })
