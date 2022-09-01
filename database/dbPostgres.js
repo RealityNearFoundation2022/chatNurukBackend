@@ -15,9 +15,9 @@ const dbPgConnection = async () => {
       // }
     });
     await pool.connect();
-    // const res = await pool.query('SELECT * FROM public.user WHERE id = $1', [2]);
+    // const res = await pool.query('SELECT * FROM public.user WHERE id = $1', [80]);
     console.log('DB Postgres connected succesfully!' );
-    // console.log('user:', res.rows[0])
+    // console.log('user:', res.rows[0].id)
   } catch(error){
     console.log(error);
     // throw new Error('Couldn\'t connect to Postgres');
