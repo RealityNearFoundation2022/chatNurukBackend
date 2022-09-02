@@ -6,7 +6,8 @@
 
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "postgres": "node database/dbPostgres.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.1",
+    "pg": "^8.8.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {

@@ -4,9 +4,10 @@ const http     = require('http');
 const socketio = require('socket.io');
 const path     = require('path');
 const cors     = require('cors');
-
 const Sockets  = require('./sockets');
+
 const { dbConnection } = require('../database/config');
+const { dbPgConnection } = require('../database/dbPostgres');
 
 class Server {
 
@@ -16,8 +17,12 @@ class Server {
         this.port = process.env.PORT;
 
         // Conectar a DB connection
+        // MongoDB connection
         dbConnection();
+        // Postgress connection
+        dbPgConnection();
 
+        
         // Http server
         this.server = http.createServer( this.app );
         
@@ -37,8 +42,8 @@ class Server {
         this.app.use( express.json());
 
         // Api Endpoints
-        this.app.use('/api/login', require('../router/auth'));
-        this.app.use('/api/messages', require('../router/messages'));
+        this.app.use('/chat/users', require('../router/auth'));
+        this.app.use('/chat/messages', require('../router/messages'));
     }
 
     // Esta configuración se puede tener aquí o como propieda de clase
@@ -62,6 +67,5 @@ class Server {
     }
 
 }
-
 
 module.exports = Server;
