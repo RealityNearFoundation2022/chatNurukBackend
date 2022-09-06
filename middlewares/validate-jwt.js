@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const validateJwt = ( req, res, next ) => {
  try {
-  const token = req.header('x-token');
+  const token = req.header('token');
   if ( !token ) {
     return res.status(401).json({ 
       ok: false,

@@ -20,7 +20,7 @@ class Server {
         // MongoDB connection
         dbConnection();
         // Postgress connection
-        dbPgConnection();
+        // dbPgConnection();
 
         
         // Http server

@@ -6,24 +6,21 @@ const { fetchConToken } = require('../helpers/fetch')
 
 const createUser = async (req, res = response) => {
   try {
-    const { email, password } = req.body;
-
+    // fecht del endpoint de user/me traer los componentes que necesito
+    const { _iduser } = req.body;
     // verification if email already exist
-    const userExist = await User.findOne({ email});
+    const userExist = await User.findOne({_iduser});
     if (userExist){
-      return res.status(400).json({ 
+      return res.status(200).json({ 
         ok: false,
-        msg: 'Email already exists',
+        msg: 'Email already exists in DB',
       })
     }
     //  Save user in DB
     const user = new User(req.body);
-    //   Encrypt password
-    const salt = bcrypt.genSaltSync();
-    user.password = bcrypt.hashSync( password, salt)
     await user.save();
     // Generate JWT token
-    const token = await generateJWT( user.id );
+    const token = await generateJWT( user.uid );
 
     res.json({
       user,
@@ -53,6 +50,18 @@ const getCurrentUser = async (req, res = response) => {
       // Generate JWT token
       const token = await generateJWT( user.id );
     }
+    // Validation password
+    const validPassword = bcrypt.compareSync( password, userDB.password);
+    if ( !validPassword ) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Password o email is incorrect'
+      });
+    }
+
+    // Generate JWT token
+    const token = await generateJWT( userDB.id)
+
     res.json({
       user,
       token

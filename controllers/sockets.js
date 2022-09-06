@@ -1,15 +1,22 @@
 const User = require('../models/user');
 const Message = require('../models/messaje');
 
-const userConnected = async( uid ) => {
-    const user = await User.findById(uid);
+
+const userConnected = async( id ) => {
+    const user = await User.findById(id);
+    const userExist = await User.findOne(user._iduser);
+    if(!userExist){
+        console.log('user not exist');
+        const userSave = new User(user._iduser);
+        await userSave.save()
+    }
     user.online = true;
     await user.save();
     return user;
 }
 
-const userDisconnect = async( uid ) => {
-    const user = await User.findById(uid);
+const userDisconnect = async( id ) => {
+    const user = await User.findById(id);
     user.online = false;
     await user.save();
     return user;
@@ -32,7 +39,6 @@ const saveMessage = async( payload ) => {
         console.log(error);
         return false;
     }
-
 }
 
 module.exports = {
