@@ -17,11 +17,7 @@ const userDisconnect = async( uid ) => {
 
 // get all users in MongoDB in online status
 const getUsers = async() => {
-<<<<<<< HEAD
-    const usuarios = await Usuario
-=======
     const users = await User
->>>>>>> fdf7e09d94b820d96906e72e49353a8bcf26b1ea
         .find()
         .sort('-online');
     return users;
