@@ -4,15 +4,12 @@ const Message = require('../models/messaje');
 
 const userConnected = async( id ) => {
     const user = await User.findById(id);
-    const userExist = await User.findOne(user._iduser);
-    if(!userExist){
-        console.log('user not exist');
-        const userSave = new User(user._iduser);
-        await userSave.save()
+    if (!user) {
+        console.log('User does not exist in DB');
+        user.online = true;
+        await user.save();
+        return user;
     }
-    user.online = true;
-    await user.save();
-    return user;
 }
 
 const userDisconnect = async( id ) => {
