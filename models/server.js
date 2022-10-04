@@ -20,7 +20,7 @@ class Server {
         // MongoDB connection
         dbConnection();
         // Postgress connection
-        dbPgConnection();
+        // dbPgConnection();
 
         
         // Http server
@@ -42,7 +42,7 @@ class Server {
         this.app.use( express.json());
 
         // Api Endpoints
-        this.app.use('/chat/users', require('../router/auth'));
+        this.app.use('/chat/users', require('../router/users'));
         this.app.use('/chat/messages', require('../router/messages'));
     }
 

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const jwt_decode = require('jwt-decode');
 
 const generateJWT = ( uid ) =>{
   return new Promise(( resolve, reject) => {
@@ -18,11 +19,12 @@ const generateJWT = ( uid ) =>{
 }
 
 const verifyJWT = (token = '') => {
- try {
-    const { uid } = jwt.verify(token, process.env.JWT_KEY);
-    return [ true, uid]
- } catch (error) {
-    return [ false, error.message]
+  try {
+    const { sub } = jwt_decode(token);
+    return [ true, sub ]
+  } catch (error) {
+    console.log("probando", error);
+     return [ false, error.message]
+  }
  }
-}
 module.exports = { generateJWT, verifyJWT }

@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const { getChat } = require( '../controllers/messages');
+const { getUsers } = require( '../controllers/users');
 const { validateJwt } = require( '../middlewares/validate-jwt');
 
 const router = Router();
-// path: chat/messages
+// path: api/messages
 
-router.get('/:from', getChat )
+router.get('/', validateJwt, getUsers )
 
 module.exports = router;

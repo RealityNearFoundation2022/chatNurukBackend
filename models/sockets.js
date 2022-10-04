@@ -1,6 +1,5 @@
 const { verifyJWT } = require('../helpers/jwt');
-const { userConnected, saveMessage, userDisconnect, getUsers } = require('../controllers/sockets')
-
+const { userConnected, saveMessage, userDisconnect, getUsersConected } = require('../controllers/sockets')
 class Sockets {
     constructor( io ) {
         this.io = io;
@@ -10,42 +9,41 @@ class Sockets {
         // On connection
         this.io.on('connection', async( socket ) => {
             // TODO: Validar el JWT, si token no es valido desconectar
-            
-            const [ validate, uid ] = verifyJWT(socket.handshake.query['x-token']);
-            if(!validate){
+            // console.log('cliente conectado', socket.handshake.headers['tokenuser']);
+            const [valid, sub ] = verifyJWT(socket.handshake.query.tokenUser);
+            if(!valid){
                 console.log('socket not valid');
                 return socket.disconnect();
             }
+            // TODO: save new user connected in MongoDb
             // TODO: Saber que usuario esta activo mediante el UID
-
-            const user = await userConnected(uid);
-            console.log('user connected', user.name)
+            const newUser = await userConnected(sub);
+            console.log("New User connected", newUser._iduser);
 
             // TODO: Emitir todos los usuarios conectados
-            this.io.emit('lista-usuarios', await getUsers() );
+            // this.io.emit('list-users', await getUsersConected() );
 
             // TODO: Escuchar cuando el cliente manda un mensaje // y un mensaje personal a un grupo...
-            socket.on( 'mensaje-personal', async(payload) => {
-                const message = await saveMessage( payload);
+            socket.on( 'message-personal', async(payload) => {
+                // const message = await saveMessage( payload);
                 console.log(payload)
-                this.io.to( payload.to ).emit( 'mensaje-personal', message );
-                this.io.to( payload.from ).emit( 'mensaje-personal', message );
+                // this.io.to( payload.to ).emit( 'message-personal', message );
+                // this.io.to( payload.from ).emit( 'message-personal', message );
             })
 
             // TODO: Socket join, UID / Unir al usuario a una sala de socket.io
-            socket.join(uid)
+            socket.join(sub)
 
             // TODO: Disconect, marcar en base de datos que usuario se desconectados
             // TODO: Emitir todos los usuarios conectados
             socket.on('disconnect', async() =>{
-                await userDisconnect(uid);
-                this.io.emit('lista-usuarios', await getUsers());
+                console.log('Cliente desconectado', newUser._iduser);
+                await userDisconnect(newUser._iduser);
+                await socket.disconnect();
+                // this.io.emit('server:list-users', await getUsers());
             })
-        
         });
     }
-
-
 }
 
 module.exports = Sockets;
