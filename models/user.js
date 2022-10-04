@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const UserSchema = Schema({
   _iduser: {
-    type: String,
+    type: String || Number,
     required: true,
     unique: true,
   },
@@ -13,7 +13,7 @@ const UserSchema = Schema({
 });
 
 UserSchema.method('toJSON', function () {
-  const { __v,_id, ...object } = this.toObject();
+  const { __v, _id,  ...object } = this.toObject();
   object.uid = _id;
   return object;
 });

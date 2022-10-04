@@ -21,9 +21,26 @@
         // socket.emit('mensaje-to-server', { data });
         
         // Para escuchar
-        socket.on('mensaje-from-server', (data) => {
-            // callback a ejecutar
+        // socket.on('mensaje-from-server', (data) => {
+        //     // callback a ejecutar
+        // });
+
+        socket.on('connect', function() {
+            console.log('Conectado al servidor')
         });
+
+        socket.on('disconnect', function() {
+            console.log('Perdimos comunicación con el servidor');
+        });
+
+
+        // socket.emit('mensaje', { nombre: 'Fernando' } );
+
+        // socket.on('mensaje', function( payload ){
+        //     console.log('Escuhando:', payload );
+        // });
+
+        
     </script>
     
 </body>

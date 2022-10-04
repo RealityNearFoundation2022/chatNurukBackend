@@ -10,8 +10,8 @@ const validateJwt = ( req, res, next ) => {
     });
   }
 
-  const { uid } = jwt.verify( token, process.env.JWT_KEY );
-  req.uid = uid;
+  const { sub } = jwt.verify( token, process.env.SECRET_KEY);
+  req.uid = sub;
   next();
 
  } catch ( e ) {
