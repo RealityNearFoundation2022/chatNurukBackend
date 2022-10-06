@@ -22,7 +22,6 @@ class Server {
         // Postgress connection
         // dbPgConnection();
 
-        
         // Http server
         this.server = http.createServer( this.app );
         

@@ -5,6 +5,6 @@ const { validateJwt } = require( '../middlewares/validate-jwt');
 const router = Router();
 // path: chat/messages
 
-router.get('/:from', getChat )
+router.get('/:to', validateJwt,  getChat )
 
 module.exports = router;

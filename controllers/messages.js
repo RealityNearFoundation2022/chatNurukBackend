@@ -1,21 +1,29 @@
 const Message = require('../models/messaje');
+const User      = require('../models/user');
 
 const getChat =  async (req, res) => {
+  // const userUid = await User
+  //       .find({_iduser: req.uid })
+        
+  // const myId = userUid[0]._id;
+  // const messagesTo = req.params.to;
   const myId = req.uid;
-  const messagesFrom = req.params.from;
-
-  const last30 = await Message.find({
+  const messagesTo = req.params.to;
+  
+  const last50 = await Message.find({
     $or: [
-      { from: myId, to: messagesFrom},
-      { from: messagesFrom, to: myId},
+      { from: myId, to: messagesTo},
+      { from: messagesTo, to: myId}
     ]
   })
   .sort({ createdAt: 'desc'})
-  .limit(30);
+  .limit(50);
 
   res.json({
     ok:true,
-    mensajes: last30
+    myId,
+    messagesTo,
+    messages: last50
   });
 
 }

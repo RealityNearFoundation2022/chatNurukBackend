@@ -21,18 +21,17 @@ class Sockets {
             console.log("New User connected", newUser._iduser);
 
             // TODO: Emitir todos los usuarios conectados
-            // this.io.emit('list-users', await getUsersConected() );
+            this.io.emit('list-users', await getUsersConected() );
 
             // TODO: Escuchar cuando el cliente manda un mensaje // y un mensaje personal a un grupo...
             socket.on( 'message-personal', async(payload) => {
-                // const message = await saveMessage( payload);
-                console.log(payload)
-                // this.io.to( payload.to ).emit( 'message-personal', message );
-                // this.io.to( payload.from ).emit( 'message-personal', message );
+                const message = await saveMessage( payload);
+                console.log("message save en MongoDb", payload)
+                this.io.to( payload.to ).emit( 'message-personal', message );
             })
 
             // TODO: Socket join, UID / Unir al usuario a una sala de socket.io
-            socket.join(sub)
+            socket.join(newUser._iduser)
 
             // TODO: Disconect, marcar en base de datos que usuario se desconectados
             // TODO: Emitir todos los usuarios conectados
