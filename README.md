@@ -142,13 +142,14 @@ import 'package:reality_near/core/helper/url_constants.dart';
 import 'package:reality_near/data/models/messageModel.dart';
 import 'package:reality_near/domain/entities/user.dart';
 
+
 class ChatService with ChangeNotifier {
   User userTo;
 
-  Future<List<Message>> getChat() async {
+  Future<List<Message>> getChat(String userToId) async {
     String token = await getPersistData("userToken");
-    final String baseUrl = CHAT_NURUK + "messages";
-    final url = baseUrl;
+    final String baseUrl = CHAT_NURUK;
+    final url = baseUrl + "messages/" + userToId;
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
       'token': token,
