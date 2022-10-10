@@ -21,8 +21,8 @@ const getChat =  async (req, res) => {
 
   res.json({
     ok:true,
-    myId,
-    messagesTo,
+    // myId,
+    // messagesTo,
     messages: last50
   });
 
