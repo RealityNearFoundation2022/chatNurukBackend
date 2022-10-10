@@ -6,7 +6,7 @@ Socket.io backend service chat app with MongoDB. This backend contains everythin
 Any additional socket connections can be made in the ```models/sockets.js``` file and any additional express middleware can be made in the ```models/server.js``` file.
 
 
-## Deployment
+## Run
 
 To deploy this project run
 
