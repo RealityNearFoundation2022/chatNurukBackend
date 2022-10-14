@@ -8,6 +8,9 @@ Any additional socket connections can be made in the ```models/sockets.js``` fil
 
 ## Run
 
+Is very important in pubspec.yaml when use the initial config the version socket.io client should be : socket_io_client: ^0.9.11
+Because, if you dont use this version the server have multiples conections & desconnections inside the app.
+
 To deploy this project run
 
 ```bash
